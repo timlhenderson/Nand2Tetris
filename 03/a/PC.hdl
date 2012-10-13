@@ -16,7 +16,27 @@ CHIP PC {
     IN in[16],load,inc,reset;
     OUT out[16];
 
-    PARTS:
-    // Put your code here.
-}
+    PARTS:    
 
+    // Register
+    Or(a=load, b=reset, out=ld1);
+    Or(a=ld1, b=inc1, out=ld2);
+    Register(in=w1, load=ld2, out=out, out=regOut);
+
+    // reset function
+    Not(in=reset, out=notReset);    
+    Extender(in=notReset, out=notReset16);
+    And16(a=w3, b=notReset16, out=w1);
+
+    // inc function    
+    Not(in=load, out=notLoad);
+    And(a=inc, b=notLoad, out=inc1); // load function must have precedence over inc
+    Extender(in=notLoad, out=notLoad16);
+    Add16(a=regOut, b[0]=inc1, out=inc2);
+    And16(a=inc2, b=notLoad16, out=inc3); // again load precedence over inc
+
+    Not(in=inc1, out=notInc1);
+    Extender(in=notInc1, out=notInc1w16);
+    And16(a=in, b=notInc1w16, out=w2);
+    Or16(a=w2, b=inc3, out=w3);
+}

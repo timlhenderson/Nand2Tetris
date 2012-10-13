@@ -1,0 +1,15 @@
+/**
+ * 16-bit extender.
+ *
+ * Outputs the value of in to all 16 pins of the out port.
+ * This is not a real chip in its own sense but only some handy tool to make writing HDL easier
+ */
+
+CHIP Extender {
+    IN in;
+    OUT out[16], notOut[16];
+
+    PARTS:
+    Not16(in[0]=in, in[1]=in, in[2]=in, in[3]=in, in[4]=in, in[5]=in, in[6]=in, in[7]=in, in[8]=in, in[9]=in, in[10]=in, in[11]=in, in[12]=in, in[13]=in, in[14]=in, in[15]=in, out=notOut, out=w1);
+    Not16(in=w1, out=out);
+}
