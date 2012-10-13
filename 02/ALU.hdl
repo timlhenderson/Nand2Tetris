@@ -68,8 +68,8 @@ CHIP ALU {
     Or16(a=w5, b=w6, out=w7);
 
     // possibly negate the output
-    Xor16(a=w7, b[0]=no, b[1]=no, b[2]=no, b[3]=no, b[4]=no, b[5]=no, b[6]=no, b[7]=no, b[8]=no, b[9]=no, b[10]=no, b[11]=no, b[12]=no, b[13]=no, b[14]=no, b[15]=no, out=w8);
+    Xor16(a=w7, b[0]=no, b[1]=no, b[2]=no, b[3]=no, b[4]=no, b[5]=no, b[6]=no, b[7]=no, b[8]=no, b[9]=no, b[10]=no, b[11]=no, b[12]=no, b[13]=no, b[14]=no, b[15]=no, out=w8, out=out);
 
     // compute the two 1-bit outputs
-    Comparator16(in=w8, zero=zr, negative=ng, out=out);
+    Comparator16(in=w8, negative=ng, zero=zr);
 }
