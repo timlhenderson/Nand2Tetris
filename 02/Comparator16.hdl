@@ -1,0 +1,31 @@
+/**
+ * 16-bit comparator: checks if input is zero and if it is negative.
+ */
+
+CHIP Comparator16 {
+    IN in[16];
+    OUT negative, zero, out[16];
+
+    PARTS:
+    Not16(in=in, out=notin);
+    And(a=notin[0],  b=notin[1],  out=c1);
+    And(a=notin[2],  b=notin[3],  out=c2);
+    And(a=notin[4],  b=notin[5],  out=c3);
+    And(a=notin[6],  b=notin[7],  out=c4);
+    And(a=notin[8],  b=notin[9],  out=c5);
+    And(a=notin[10], b=notin[11], out=c6);
+    And(a=notin[12], b=notin[13], out=c7);
+    And(a=notin[14], b=notin[15], out=c8);
+    And(a=c1,     b=c2,     out=c9);
+    And(a=c3,     b=c4,     out=c10);
+    And(a=c5,     b=c6,     out=c11);
+    And(a=c7,     b=c8,     out=c12);
+    And(a=c9,     b=c10,    out=c13);
+    And(a=c11,    b=c12,    out=c14);
+    And(a=c13,    b=c14,    out=zero);
+    
+    And(a=in[15], b=true, out=negative);
+
+    // The And16 is only used to output the input again (because of damn hld syntax)
+    And16(a=in, b=true, out=out);
+}
